@@ -1,20 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View } from "react-native";
+import { TodoList } from "./components";
+import { COLORS } from "./colors";
+import { useState } from "react";
+import { TodoItemI } from "./types";
+
+const defaultTodos = [
+  {
+    id: 1,
+    text: "Todo 1",
+    completed: false,
+  },
+];
 
 export default function App() {
+  const [todos, setTodos] = useState<TodoItemI[]>(defaultTodos);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <View style={style.container}>
+      <TodoList todos={todos} setTodos={setTodos} />
       <StatusBar style="auto" />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: COLORS.bgColor,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

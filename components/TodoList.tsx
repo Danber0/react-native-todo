@@ -1,15 +1,20 @@
 import { View, FlatList, Text, StyleSheet } from "react-native";
 import { TodoItem } from "./TodoItem";
-import { Dispatch, FC, SetStateAction } from "react";
+import { useState } from "react";
 import { TodoItemI } from "../types";
 import { Header } from "./Header";
 
-interface TodoListProps {
-  todos: TodoItemI[];
-  setTodos: Dispatch<SetStateAction<TodoItemI[]>>;
-}
+const defaultTodos = [
+  {
+    id: 1,
+    text: "Todo 1",
+    completed: false,
+  },
+];
 
-export const TodoList: FC<TodoListProps> = ({ todos, setTodos }) => {
+export const TodoList = () => {
+  const [todos, setTodos] = useState<TodoItemI[]>(defaultTodos);
+
   const handleDeleteTodo = (id: number) => {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   };

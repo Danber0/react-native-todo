@@ -1,34 +1,25 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
-import { TodoList } from "./components";
-import { COLORS } from "./colors";
-import { useState } from "react";
-import { TodoItemI } from "./types";
+import { TodoItemView, TodoList } from "./components";
+import { createStaticNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const defaultTodos = [
-  {
-    id: 1,
-    text: "Todo 1",
-    completed: false,
-  },
-];
-
-export default function App() {
-  const [todos, setTodos] = useState<TodoItemI[]>(defaultTodos);
-
-  return (
-    <View style={style.container}>
-      <TodoList todos={todos} setTodos={setTodos} />
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.bgColor,
-    alignItems: "center",
-    justifyContent: "center",
+const RootStack = createNativeStackNavigator({
+  screens: {
+    TodoList: {
+      screen: TodoList,
+      options: { headerShown: false },
+    },
+    TodoItemView: {
+      screen: TodoItemView,
+      options: {
+        headerBackButtonDisplayMode: "generic",
+        headerTitle: "",
+      },
+    },
   },
 });
+
+const Navigation = createStaticNavigation(RootStack);
+
+export default function App() {
+  return <Navigation />;
+}
